@@ -1,6 +1,47 @@
 
-var fn01 = require('./date.utils').test1;
-// var monthsAbbr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var commonUtils = require('./common.utils');
+var dateUtils = require('./date.utils');
+
+function bindEvent() {
+
+}
+
+function unbindEvent() {
+
+}
+
+function getCalendarList(startTime, endTime) {
+
+}
+
+function getCalendarOfMonth(month){
+    var weeks = [],
+        firstDay = dateUtils.getFirstDayOfDate(month), //该月的第一天
+        firstWeekDay = firstDay.getDay(), //该月的一个星期
+        daysOfMonth = Date.getDaysInMonth(month.getFullYear(), month.getMonth()), //该月有几天
+        rowNums = Math.ceil((firstWeekDay + daysOfMonth) / 7), //该月日历的行数
+        curDate = firstDay.clone().addDays(-firstWeekDay); //循环遍历的日期
+
+    for (var i = 0; i < rowNums; i++) {
+        var days = [];
+        for (var j = 0; j < 7; j++) {
+            var tmp = curDate.clone();
+            days.push({
+                day: tmp,
+                disable: tmp.isAfter(scope.option.max) || tmp.isBefore(scope.option.min),
+                other: tmp.getMonth() != month.getMonth(),
+                today: Date.isSameDay(tmp, today)
+            });
+            curDate = curDate.addDays(1);
+        }
+        weeks.push(days);
+    }
+
+    return {
+        month: month,
+        weeks: weeks
+    };
+}
 
 /**
  * 基于模板进行渲染
@@ -22,7 +63,14 @@ var fn01 = require('./date.utils').test1;
  * @returns {{render: render}}
  */
 function datePicker(options){
-    console.log(fn01());
+    var defaults = {
+
+    };
+    // 配置
+    var configs =  commonUtils.extend(defaults, options);
+
+    var calendars = getCalendarList(configs.startTime, configs.endTime);
+
     return {
         render: function(){
 

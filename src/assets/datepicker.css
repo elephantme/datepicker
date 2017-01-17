@@ -1,0 +1,74 @@
+.pt-datepicker table,td,th{padding: 0px; margin: 0px;}
+.pt-datepicker {
+    width: 222px;
+    height: 260px;
+    background-color: #3D3D3D;
+    box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
+    border-radius: 4px 0 0 4px;
+    font-family: Arial;
+}
+.pt-datepicker > .header{
+    text-align: center;
+    padding: 6px;
+}
+.pt-datepicker > .header > a.prev, .pt-datepicker > .header > a.next {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    border-radius: 8px;
+    background-color: #696969;
+}
+.pt-datepicker > .header > span.title{
+    color: #fff;
+    font-size: 12px;
+    margin: 0 20px 0 20px;
+    height: 15px;
+    line-height: 15px;
+    width: 56px;
+}
+.pt-datepicker > .content {
+    margin: 0 20px;
+}
+.pt-datepicker > .content > table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+    color: #fff;
+    font-size: 12px;
+}
+.pt-datepicker > .content > table th{
+    width: 26px;
+    color: #696969;
+    padding: 8px 0px;
+}
+.pt-datepicker > .content > table td > a {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    margin: 2px 0px;
+    line-height: 26px;
+    cursor: pointer;
+}
+.pt-datepicker > .content > table td > a:hover{
+    background-color: #B2CF07;
+    /*border-radius: 13px;*/
+}
+
+.pt-datepicker > .content > table td > a.selected{
+    color: #3D3D3D;
+    background-color: #B2CF07;
+}
+.pt-datepicker > .content > table td > a.selected.first{
+    border-top-left-radius: 13px;
+    border-bottom-left-radius: 13px;
+}
+.pt-datepicker > .content > table td > a.selected.last{
+    border-top-right-radius: 13px;
+    border-bottom-right-radius: 13px;
+}
+.pt-datepicker > .content > table td > a.disable{
+    color: #696969;
+    cursor: default;
+}
