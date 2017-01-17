@@ -6,6 +6,9 @@ module.exports = {
     isDate: function (obj) {
         return Object.prototype.toString(obj) == '[object Date]';
     },
+    parse: function (str) {
+        return new Date(str);
+    },
     today: function () {
 
     },
