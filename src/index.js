@@ -2,19 +2,11 @@
 var commonUtils = require('./common.utils');
 var dateUtils = require('./date.utils');
 var calendar = require('./calendar');
+var gator = require('./gator');
 
-function bindEvent() {
-
-}
-
-function unbindEvent() {
+function getCalendarElement(){
 
 }
-
-function getCalendarList(startTime, endTime) {
-
-}
-
 /**
  * 基于模板进行渲染
  * 1. 数据准备
@@ -38,15 +30,15 @@ function datePicker(options){
     var defaults = {
 
     };
-    var configs =  commonUtils.extend(defaults, options);
-    var startDate = dateUtils.parse(configs.startTime);
-    var calendarElement = calendar.renderCalendar(startDate);
-
-    return {
-        render: function(){
-            options.el.appendChild(calendarElement);
-        }
-    };
+    this.configs =  commonUtils.extend(defaults, options);
+    this.el = this.configs.el;
 }
+
+datePicker.prototype.render = function (date) {
+    date = date || this.configs.startTime;
+    var startDate = dateUtils.parse(date);
+    var calendarElement = calendar.renderCalendar(startDate);
+    this.el.appendChild(calendarElement);
+};
 
 module.exports = datePicker;
