@@ -38,14 +38,13 @@ function datePicker(options){
     var defaults = {
 
     };
-    // 配置
     var configs =  commonUtils.extend(defaults, options);
     var startDate = dateUtils.parse(configs.startTime);
-    var calendar = calendar.getCalendarOfMonth(startDate);
+    var calendarElement = calendar.renderCalendar(startDate);
 
     return {
         render: function(){
-
+            options.el.appendChild(calendarElement);
         }
     };
 }

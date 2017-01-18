@@ -6,7 +6,7 @@ var config = {
     entry: './index.js',
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: '[name].min.js',
+        filename: 'datepicker.min.js',
         library: 'pickdate',
         libraryTarget: 'umd',
         umdNamedDefine: true

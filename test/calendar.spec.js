@@ -1,11 +1,12 @@
 var calendar = require('../src/calendar');
 
 describe('calendar.utils', function () {
-    var calendarData = null, currentDate = null;
+    var calendarData = null, currentDate = null, table = null;
 
     beforeEach(function(){
         currentDate = new Date('2017-01-12');
         calendarData = calendar.getCalendarOfMonth(currentDate);
+        table = calendar.renderCalendarTable(calendarData.weeks);
     });
 
     describe('getCalendarOfMonth', function () {
@@ -19,25 +20,35 @@ describe('calendar.utils', function () {
         });
     });
 
-    describe('renderCalendarBody', function () {
-        it('should have 6 rows', function () {
-            var tbody = calendar.renderCalendarBody(calendarData.weeks);
+    describe('renderCalendarTable', function () {
+        it('tbody should have 6 rows', function () {
+            var tbody = table.querySelector('tbody');
             expect(tbody.children.length).to.be.equal(6);
         });
 
-        it('should have 7 column', function () {
-            var tbody = calendar.renderCalendarBody(calendarData.weeks);
+        it('tbody should have 7 column', function () {
+            var tbody = table.querySelector('tbody');
             var row = tbody.children[0];
             expect(row.children.length).to.be.equal(7);
         });
 
-        it('five row, six column content is 11', function () {
-            var tbody = calendar.renderCalendarBody(calendarData.weeks);
+        it('tbody five row, six column content is 11', function () {
+            var tbody = table.querySelector('tbody');
             var row = tbody.children[5],
                 column = row.children[6],
                 text = column.innerText;
             expect(text).to.be.equal('11');
         });
 
-    })
+        it('should have thead', function () {
+            var thead = table.querySelector('thead');
+            expect(thead).to.not.be.null;
+        });
+
+        it('thead first text content is Mon', function () {
+            var thead = table.querySelector('thead');
+            var text = thead.children[0].innerText;
+            expect(text).to.be.equal('Mon');
+        });
+    });
 });
