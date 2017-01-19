@@ -12,6 +12,10 @@ var ROW_NUM = 6,
     DIV = 'div',
     CLASS_NAME_SPACE = 'pt-datepicker',
     TABLE_CONTAINER_CLASS = 'content',
+    DISABLE_CLASS = 'disable ',
+    SELECTED_CLASS = 'selected ',
+    FIRST_SELECTED_CLASS = 'first ',
+    LAST_SELECTED_CLASS = 'last ',
     doc = document;
 
 var weekends = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -27,7 +31,7 @@ function getTHead(weekends){
     }, thead);
 }
 
-function getTBody(weeks){
+function getTBody(weeks, fn){
     var tbody = doc.createElement(TBODY);
     weeks.forEach(function (rows) {
         var tr = doc.createElement(TR);
@@ -35,6 +39,10 @@ function getTBody(weeks){
             var td = doc.createElement(TD),
                 a = doc.createElement(A),
                 text = doc.createTextNode(col.getDate());
+            //设置样式
+            var clsNames = fn.call(null, col);
+            a.setAttribute('class', clsNames);
+            //apend 操作
             a.appendChild(text);
             td.appendChild(a);
             tr.appendChild(td);
@@ -66,20 +74,40 @@ module.exports = {
         };
     },
 
-    renderCalendarTable: function (weeks) {
+    renderCalendarTable: function (weeks, fn) {
         var thead = getTHead(weekends),
-            tbody = getTBody(weeks),
+            tbody = getTBody(weeks, fn),
             table = doc.createElement(TABLE);
         table.appendChild(thead);
         table.appendChild(tbody);
         return table;
     },
 
-    renderCalendar: function (date) {
+    renderCalendar: function (startDate, endDate) {
         var container = doc.createElement(DIV),
             tableContainer = doc.createElement(DIV),
-            calendar = this.getCalendarOfMonth(date),
-            table = this.renderCalendarTable(calendar.weeks);
+            calendar = this.getCalendarOfMonth(startDate),
+            table = this.renderCalendarTable(calendar.weeks, function (currentDate) {
+                var currentDay = currentDate.getDate(),
+                    startDay = startDate.getDate(),
+                    endDay = endDate.getDate();
+
+                // 当前日期不属于该月份则返回disable
+                if(currentDate.getMonth() != startDate.getMonth()) return DISABLE_CLASS;
+
+                // 当前日期大于今日则返回disable
+                if(currentDay > new Date().getDate()) return DISABLE_CLASS;
+
+                // 范围内
+                if(currentDay >= startDay && currentDay <= endDay){
+                    var selectedCls = SELECTED_CLASS;
+                    if(currentDay == startDay) selectedCls += FIRST_SELECTED_CLASS;
+                    if(currentDay == endDay) selectedCls += LAST_SELECTED_CLASS;
+                    return selectedCls;
+                }
+
+                return '';
+            });
 
         container.setAttribute('class', CLASS_NAME_SPACE);
         tableContainer.setAttribute('class', TABLE_CONTAINER_CLASS);

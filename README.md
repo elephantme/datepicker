@@ -19,3 +19,4 @@
 2. [daterangepicker](http://www.daterangepicker.com/)
 3. [date-time-format](http://blog.stevenlevithan.com/archives/date-time-format)
 4. [webpack-output-library](http://krasimirtsonev.com/blog/article/javascript-library-starter-using-webpack-es6)
+5. [gator](https://craig.is/riding/gators)
