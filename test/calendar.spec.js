@@ -1,12 +1,13 @@
 var calendar = require('../src/calendar');
 
 describe('calendar.utils', function () {
-    var calendarData = null, currentDate = null, table = null;
+    var calendarData = null, currentDate = null, endDate = null, table = null;
 
     beforeEach(function(){
         currentDate = new Date('2017-01-12');
-        calendarData = calendar.getCalendarOfMonth(currentDate);
-        table = calendar.renderCalendarTable(calendarData.weeks);
+        endDate = new Date('2017-01-19');
+        calendarData = calendar.getCalendarOfMonth(currentDate, function(){});
+        table = calendar.renderCalendarTable(calendarData.weeks, function(){});
     });
 
     describe('getCalendarOfMonth', function () {
