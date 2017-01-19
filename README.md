@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/elephantme/datepicker.svg?branch=master)](https://travis-ci.org/elephantme/datepicker)
+
 ## 说明
 
 > 该日期控件包含常用功能,不依赖其它第三方库,浏览器需要支持ES5。
