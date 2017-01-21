@@ -20,7 +20,7 @@ var ROW_NUM = 6,
 
 var weekends = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-function getTHead(weekends){
+function getTHead(weekends) {
     var thead = doc.createElement(THEAD);
     return weekends.reduce(function (head, w) {
         var text = doc.createTextNode(w);
@@ -31,7 +31,7 @@ function getTHead(weekends){
     }, thead);
 }
 
-function getTBody(weeks, fn){
+function getTBody(weeks, fn) {
     var tbody = doc.createElement(TBODY);
     weeks.forEach(function (rows) {
         var tr = doc.createElement(TR);
@@ -93,16 +93,16 @@ module.exports = {
                     endDay = endDate.getDate();
 
                 // 当前日期不属于该月份则返回disable
-                if(currentDate.getMonth() != startDate.getMonth()) return DISABLE_CLASS;
+                if (currentDate.getMonth() != startDate.getMonth()) return DISABLE_CLASS;
 
                 // 当前日期大于今日则返回disable
-                if(currentDay > new Date().getDate()) return DISABLE_CLASS;
+                if (currentDay > new Date().getDate()) return DISABLE_CLASS;
 
                 // 范围内
-                if(currentDay >= startDay && currentDay <= endDay){
+                if (currentDay >= startDay && currentDay <= endDay) {
                     var selectedCls = SELECTED_CLASS;
-                    if(currentDay == startDay) selectedCls += FIRST_SELECTED_CLASS;
-                    if(currentDay == endDay) selectedCls += LAST_SELECTED_CLASS;
+                    if (currentDay == startDay) selectedCls += FIRST_SELECTED_CLASS;
+                    if (currentDay == endDay) selectedCls += LAST_SELECTED_CLASS;
                     return selectedCls;
                 }
 
@@ -115,5 +115,43 @@ module.exports = {
         container.appendChild(tableContainer);
 
         return container;
+    },
+
+    getClassNames: function (currentDate, displayDate, configs) {
+        var result = [];
+
+        // 不是同一个月份
+        if (currentDate.getMonth() != displayDate.getMonth()) {
+            result.push(DISABLE_CLASS);
+            return result;
+        }
+
+        // 大于今日的日期
+        var today = dateUtils.clearTime(new Date());
+        if (dateUtils.compare(today, currentDate) > 0) {
+            result.push(DISABLE_CLASS);
+            return result;
+        }
+
+        var startDate = dateUtils.clearTime(configs.startDate),
+            endDate = dateUtils.clearTime(configs.endDate);
+
+        // 在开始和结束时间范围内
+        if (dateUtils.compare(currentDate, startDate) >= 0 &&
+            dateUtils.compare(currentDate, endDate) <= 0) {
+            result.push(SELECTED_CLASS);
+        }
+
+        // 开始
+        if (dateUtils.compare(currentDate, startDate) == 0) {
+            result.push(FIRST_SELECTED_CLASS);
+        }
+
+        // 结束
+        if (dateUtils.compare(currentDate, endDate)) {
+            result.push(LAST_SELECTED_CLASS);
+        }
+
+        return result;
     }
 };

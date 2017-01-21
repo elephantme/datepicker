@@ -52,4 +52,8 @@ describe('calendar.utils', function () {
             expect(text).to.be.equal('Mon');
         });
     });
+
+    describe('getClassNames', function () {
+        // 1. 时间
+    });
 });
